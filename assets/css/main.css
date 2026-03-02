@@ -1,0 +1,31 @@
+/* assets/css/main.css — estilos globales mínimos */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: system-ui, sans-serif;
+  background: #f4f6f9;
+  color: #1a1a2e;
+}
+
+/* Utilidad global */
+.hidden { display: none !important; }
+
+/* ── Navbar ─────────────────────────────── */
+/* TODO: estilar .navbar, .navbar__brand, .nav__list, .nav__link, .nav__link--active */
+
+/* ── Páginas ─────────────────────────────── */
+#app {
+  max-width: 1100px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+/* ── Modal ───────────────────────────────── */
+/* TODO: estilar .modal-overlay, .modal, .modal__header, .modal__body, .modal__footer */
+
+/* ── Tabla ───────────────────────────────── */
+/* TODO: estilar .table-wrapper, .table, .table__th, .table__td */
+
+/* ── Botones ─────────────────────────────── */
+/* TODO: estilar .btn, .btn--primary, .btn--secondary, .btn--danger */

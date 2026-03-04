@@ -10,7 +10,7 @@ const AccountService = (() => {
   const getById = (id)       => ApiClient.get(`/accounts/${id}`);
 
   const create = async (data) => {
-    const newAccount = await ApiClient.post('/accountsxd', data);
+    const newAccount = await ApiClient.post('/accounts', data);
     EventBus.emit('account:created', newAccount);
     return newAccount;
   };

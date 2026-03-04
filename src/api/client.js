@@ -5,17 +5,41 @@ import { API_BASE_URL } from '../../config/constants.js';
 
 const ApiClient = (() => {
   const buildHeaders = () => {
-    // TODO: retornar { 'Content-Type': 'application/json', Authorization: bearer token }
+    const headers = { 'Content-Type': 'application/json' };
+    const token = localStorage.getItem('token');
+    if (token) headers['Authorization'] = `Bearer ${token}`;
+    return headers;
   };
 
   const handleResponse = async (response) => {
-    // TODO: si !response.ok lanzar error; si ok retornar response.json()
+    if (!response.ok) {
+      const body = await response.json().catch(() => ({}));
+      throw new Error(body.message || `Error HTTP ${response.status}`);
+    }
+    return response.json();
   };
 
-  const get    = (endpoint)       => { /* TODO: fetch GET */ };
-  const post   = (endpoint, body) => { /* TODO: fetch POST con JSON.stringify(body) */ };
-  const put    = (endpoint, body) => { /* TODO: fetch PUT  con JSON.stringify(body) */ };
-  const del    = (endpoint)       => { /* TODO: fetch DELETE */ };
+  const get = (endpoint) =>
+    fetch(`${API_BASE_URL}${endpoint}`, { method: 'GET', headers: buildHeaders() })
+      .then(handleResponse);
+
+  const post = (endpoint, body) =>
+    fetch(`${API_BASE_URL}${endpoint}`, {
+      method: 'POST',
+      headers: buildHeaders(),
+      body: JSON.stringify(body),
+    }).then(handleResponse);
+
+  const put = (endpoint, body) =>
+    fetch(`${API_BASE_URL}${endpoint}`, {
+      method: 'PUT',
+      headers: buildHeaders(),
+      body: JSON.stringify(body),
+    }).then(handleResponse);
+
+  const del = (endpoint) =>
+    fetch(`${API_BASE_URL}${endpoint}`, { method: 'DELETE', headers: buildHeaders() })
+      .then(handleResponse);
 
   return { get, post, put, delete: del };
 })();

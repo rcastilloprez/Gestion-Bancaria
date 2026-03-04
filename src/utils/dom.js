@@ -8,7 +8,10 @@ export const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel))
 
 /** Crea un elemento con atributos y contenido HTML opcionales */
 export const createElement = (tag, attrs = {}, html = '') => {
-  // TODO: createElement, setAttribute en loop, innerHTML = html
+  const el = document.createElement(tag);
+  Object.entries(attrs).forEach(([k, v]) => el.setAttribute(k, v));
+  el.innerHTML = html;
+  return el;
 };
 
 /** Muestra/oculta con clase CSS 'hidden' */

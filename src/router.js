@@ -1,22 +1,42 @@
 // src/router.js — enrutador SPA basado en hash (#/ruta)
-// Uso: Router.add('/dashboard', DashboardPage.render)  |  Router.start(root)
 
-import EventBus from './events/EventBus.js';
+import EventBus  from './events/EventBus.js';
 import { ROUTES } from '../config/constants.js';
-
-// Importa las páginas aquí cuando las crees:
-// import DashboardPage    from './pages/Dashboard/DashboardPage.js';
-// import AccountsPage     from './pages/Accounts/AccountsPage.js';
-// import TransactionsPage from './pages/Transactions/TransactionsPage.js';
 
 const Router = (() => {
   const routes = {};
   let root = null;
 
-  const add      = (path, renderFn) => { /* TODO: guardar renderFn en routes[path] */ };
-  const navigate = (path) => { /* TODO: window.location.hash = path */ };
-  const resolve  = async () => { /* TODO: leer hash, buscar en routes y llamar renderFn(root) */ };
-  const start    = (rootEl) => { /* TODO: guardar rootEl, escuchar hashchange, llamar resolve() */ };
+  const add = (path, renderFn) => {
+    routes[path] = renderFn;
+  };
+
+  const navigate = (path) => {
+    window.location.hash = path;
+  };
+
+  const resolve = async () => {
+    const path = window.location.hash.slice(1) || ROUTES.DASHBOARD;
+
+    EventBus.emit('router:beforeNavigate', { path });
+    root.innerHTML = '';
+
+    const handler = routes[path];
+    if (handler) {
+      await handler(root);
+    } else {
+      root.innerHTML = `<div style="padding:2rem"><h2>Página no encontrada: ${path}</h2></div>`;
+    }
+
+    EventBus.emit('router:afterNavigate', { path });
+  };
+
+  const start = (rootEl) => {
+    root = rootEl;
+    window.addEventListener('hashchange', () => resolve());
+    resolve();
+  };
+
   const getCurrentPath = () => window.location.hash.slice(1) || ROUTES.DASHBOARD;
 
   return { add, navigate, start, getCurrentPath };

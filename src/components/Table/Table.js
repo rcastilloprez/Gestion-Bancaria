@@ -1,16 +1,37 @@
 // src/components/Table/Table.js — tabla dinámica reutilizable
-// Uso:
-//   Table.render(container, {
-//     columns: [{ key: 'date', label: 'Fecha', render: (v) => formatDate(v) }],
-//     data: [...],
-//     emptyMessage: 'Sin datos',
-//   });
 
 const Table = (() => {
   const render = (container, { columns, data, emptyMessage = 'Sin datos.' }) => {
-    // TODO: si data está vacía mostrar emptyMessage
-    // TODO: construir <table> con <thead> desde columns y <tbody> desde data
-    // TODO: si la columna tiene render(), usarlo para mostrar el valor
+    if (!data || data.length === 0) {
+      container.innerHTML = `<p class="table__empty">${emptyMessage}</p>`;
+      return;
+    }
+
+    const headers = columns
+      .map((col) => `<th class="table__th">${col.label}</th>`)
+      .join('');
+
+    const rows = data
+      .map((item) => {
+        const cells = columns
+          .map((col) => {
+            const value = item[col.key];
+            const display = col.render ? col.render(value, item) : (value ?? '—');
+            return `<td class="table__td">${display}</td>`;
+          })
+          .join('');
+        return `<tr>${cells}</tr>`;
+      })
+      .join('');
+
+    container.innerHTML = `
+      <div class="table-wrapper">
+        <table class="table">
+          <thead><tr>${headers}</tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>
+    `;
   };
 
   return { render };

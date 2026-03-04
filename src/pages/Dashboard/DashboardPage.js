@@ -1,10 +1,15 @@
 // src/pages/Dashboard/DashboardPage.js
-// Esta función es llamada por el Router cuando la ruta es '/dashboard'
 
 const DashboardPage = {
   render: async (container) => {
-    // TODO: construir e insertar el HTML del dashboard en container
-    // TODO: llamar a los servicios que necesites (AccountService, etc.)
+    container.innerHTML = `
+      <section class="page">
+        <div class="page__header">
+          <h1>Dashboard</h1>
+        </div>
+        <p>Bienvenido. Usa el menú para navegar a Cuentas o Transacciones.</p>
+      </section>
+    `;
   },
 };
 

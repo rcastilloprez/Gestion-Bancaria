@@ -13,9 +13,9 @@ import TransactionsPage from './pages/Transactions/TransactionsPage.js';
 Navbar.mount(document.getElementById('navbar'));
 
 // 2. Registrar rutas
-Router.add(ROUTES.DASHBOARD,    DashboardPage.render);
-Router.add(ROUTES.ACCOUNTS,     AccountsPage.render);
-Router.add(ROUTES.TRANSACTIONS, TransactionsPage.render);
+Router.add(ROUTES.DASHBOARD,    (c) => DashboardPage.render(c));
+Router.add(ROUTES.ACCOUNTS,     (c) => AccountsPage.render(c));
+Router.add(ROUTES.TRANSACTIONS, (c) => TransactionsPage.render(c));
 
 // 3. Arrancar la app
 Router.start(document.getElementById('app'));

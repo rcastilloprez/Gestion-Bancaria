@@ -7,6 +7,7 @@ const EventBus = (() => {
   const on = (event, cb) => {
     if (!listeners[event]) listeners[event] = [];
     listeners[event].push(cb);
+    console.log('[EventBus] on →', event, '| total listeners:', listeners[event].length, '| todos:', listeners);
   };
 
   const off = (event, cb) => {
@@ -15,6 +16,7 @@ const EventBus = (() => {
   };
 
   const emit = (event, data) => {
+    console.log('[EventBus] emit →', event, '| data:', data, '| listeners activos:', listeners[event]?.length ?? 0);
     if (!listeners[event]) return;
     listeners[event].forEach((cb) => cb(data));
   };
@@ -26,7 +28,6 @@ const EventBus = (() => {
     };
     on(event, wrapper);
   };
-
   return { on, off, emit, once };
 })();
 

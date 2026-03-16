@@ -13,28 +13,10 @@
       "balance": 82000
     },
     {
-      "id": 3,
       "alias": "Inversión a plazo",
       "type": "Inversión",
-      "balance": 250000.75
-    },
-    {
-      "alias": "xd",
-      "type": "Ahorro",
-      "balance": 2000,
-      "id": 4
-    },
-    {
-      "alias": "xd",
-      "type": "Ahorro",
-      "balance": 2000,
-      "id": 5
-    },
-    {
-      "alias": "xd",
-      "type": "Corriente",
-      "balance": 20000,
-      "id": 6
+      "balance": 250000.75,
+      "id": 3
     }
   ],
   "transactions": [

@@ -24,6 +24,13 @@ const AccountsPage = {
     container.querySelector('#btn-new-account').addEventListener('click', () => {
       AccountsPage._openCreateModal(container);
     });
+
+    container.querySelector('#accounts-table').addEventListener('click', (e) => {
+      const id = e.target.dataset.id;
+      if (!id) return;
+      if (e.target.matches('.btn--edit'))   AccountsPage._openEditModal(id, container);
+      if (e.target.matches('.btn--delete')) AccountsPage._deleteAccount(id, container);
+    });
   },
 
   _loadAccounts: async (container) => {
@@ -36,7 +43,11 @@ const AccountsPage = {
         columns: [
           { key: 'alias',   label: 'Nombre' },
           { key: 'type',    label: 'Tipo' },
-          { key: 'balance', label: 'Saldo', render: (v) => formatCurrency(v) },
+          { key: 'balance',  label: 'Saldo',    render: (v) => formatCurrency(v) },
+          { key: 'actions', label: 'Acciones', render: (item) => `
+            <button class="btn btn--secondary btn--edit"   data-id="${item.id}">Editar</button>
+            <button class="btn btn--danger    btn--delete" data-id="${item.id}">Eliminar</button>
+          ` },
         ],
         data: accounts,
         emptyMessage: 'No tienes cuentas aún. ¡Crea la primera!',
@@ -97,6 +108,70 @@ const AccountsPage = {
         }
       },
     });
+  },
+
+  _openEditModal: async (id, container) => {
+    const account = await AccountService.getById(id);
+    const typeOptions = ACCOUNT_TYPES
+      .map((t) => `<option value="${t}" ${t === account.type ? 'selected' : ''}>${t}</option>`)
+      .join('');
+
+    Modal.open({
+      title: 'Editar Cuenta',
+      confirmText: 'Guardar cambios',
+      content: `
+        <form id="form-edit-account" novalidate>
+          <div class="field">
+            <label>Nombre / Alias *</label>
+            <input name="alias" type="text" value="${account.alias}" />
+            <span class="field__error" id="error-alias"></span>
+          </div>
+          <div class="field">
+            <label>Tipo *</label>
+            <select name="type">
+              <option value="">-- Selecciona --</option>
+              ${typeOptions}
+            </select>
+            <span class="field__error" id="error-type"></span>
+          </div>
+          <div class="field">
+            <label>Saldo</label>
+            <input name="balance" type="number" value="${account.balance}" min="0" />
+          </div>
+        </form>
+      `,
+      onConfirm: async (modalBody) => {
+        const form   = modalBody.querySelector('#form-edit-account');
+        const data   = Object.fromEntries(new FormData(form));
+        data.balance = Number(data.balance) || 0;
+
+        const aliasError = validate(data.alias, [required]);
+        const typeError  = validate(data.type,  [required]);
+
+        form.querySelector('#error-alias').textContent = aliasError || '';
+        form.querySelector('#error-type').textContent  = typeError  || '';
+
+        if (aliasError || typeError) return;
+
+        try {
+          await AccountService.update(id, data);
+          Modal.close();
+          await AccountsPage._loadAccounts(container);
+        } catch (error) {
+          alert(`No se pudo actualizar la cuenta: ${error.message}`);
+        }
+      },
+    });
+  },
+
+  _deleteAccount: async (id, container) => {
+    if (!confirm('¿Eliminar esta cuenta? Esta acción no se puede deshacer.')) return;
+    try {
+      await AccountService.remove(id);
+      await AccountsPage._loadAccounts(container);
+    } catch (error) {
+      alert(`No se pudo eliminar la cuenta: ${error.message}`);
+    }
   },
 };
 

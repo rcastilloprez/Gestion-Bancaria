@@ -15,6 +15,10 @@ const Table = (() => {
       .map((item) => {
         const cells = columns
           .map((col) => {
+            if (col.key === 'actions') {
+              const buttons = col.render ? col.render(item) : '';
+              return `<td class="table__td table__td--actions">${buttons}</td>`;
+            }
             const value = item[col.key];
             const display = col.render ? col.render(value, item) : (value ?? '—');
             return `<td class="table__td">${display}</td>`;

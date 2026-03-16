@@ -9,3 +9,5 @@ export const ROUTES = {
 };
 
 export const ACCOUNT_TYPES = ['Ahorro', 'Corriente', 'Inversión'];
+
+export const TRANSACTION_TYPES = ['Deposito', 'Retiro', 'Transferencia'];

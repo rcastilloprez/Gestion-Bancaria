@@ -1,28 +1,28 @@
 // src/services/accountService.js — lógica de negocio para cuentas
 // Las páginas/componentes llaman a este servicio, nunca a ApiClient directamente.
 
-import ApiClient from '../api/client.js';
+import AccountRepository from '../repositories/accountRepository.js';
 import EventBus  from '../events/EventBus.js';
 
 const AccountService = (() => {
-  const getAll  = ()         => ApiClient.get('/accounts');
+  const getAll  = ()         => AccountRepository.getAll();
 
-  const getById = (id)       => ApiClient.get(`/accounts/${id}`);
+  const getById = (id)       => AccountRepository.getById(id);
 
   const create = async (data) => {
-    const newAccount = await ApiClient.post('/accounts', data);
+    const newAccount = await AccountRepository.create(data);
     EventBus.emit('account:created', newAccount);
     return newAccount;
   };
 
   const update = async (id, data) => {
-    const updated = await ApiClient.put(`/accounts/${id}`, data);
+    const updated = await AccountRepository.update(id, data);
     EventBus.emit('account:updated', updated);
     return updated;
   };
 
   const remove = async (id) => {
-    await ApiClient.delete(`/accounts/${id}`);
+    await AccountRepository.remove(id);
     EventBus.emit('account:deleted', { id });
   };
 

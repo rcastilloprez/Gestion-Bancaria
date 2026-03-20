@@ -33,7 +33,7 @@
       "accountId": 1,
       "type": "retiro",
       "amount": 800,
-      "description": "Pago servicios",
+      "description": "Necesidad de plata fisica",
       "date": "2026-03-02T14:30:00Z"
     },
     {
@@ -42,6 +42,15 @@
       "type": "deposito",
       "amount": 2000,
       "description": "Ahorro mensual",
+      "date": "2026-03-01T09:00:00Z"
+    },
+    {
+      "id": 4,
+      "accountId": 2,
+      "toAccountId": 1,
+      "type": "transferencia",
+      "amount": 2000,
+      "description": "Pago servicios",
       "date": "2026-03-01T09:00:00Z"
     }
   ]

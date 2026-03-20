@@ -5,9 +5,8 @@ const TransactionsPage = {
     container.innerHTML = `
       <section class="page">
         <div class="page__header">
-          <h1>Transacciones</h1>
+          <h1>Mis transacciones</h1>
         </div>
-        <p>Próximamente: listado de transacciones por cuenta.</p>
       </section>
     `;
   },

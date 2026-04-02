@@ -3,6 +3,7 @@
 import AccountRepository from '../repositories/accountRepository.js';
 import TransactionRepository from '../repositories/transactionRepository.js';
 import EventBus  from '../events/EventBus.js';
+import { TRANSACTION_TYPES } from '../../config/constants.js';
 
 const TransactionService = (() => {
   const getAll       = ()         => TransactionRepository.getAll();
@@ -24,7 +25,7 @@ const TransactionService = (() => {
 
     const createdTransaction = await TransactionRepository.create({
       accountId,
-      type: 'deposito',
+      type: TRANSACTION_TYPES.DEPOSIT,
       amount,
       description: payload?.description || 'Deposito',
       date: payload?.date || new Date().toISOString(),
@@ -55,7 +56,7 @@ const TransactionService = (() => {
 
     const createdTransaction = await TransactionRepository.create({
       accountId,
-      type: 'retiro',
+      type: TRANSACTION_TYPES.WITHDRAWAL,
       amount,
       description: payload?.description || 'Retiro',
       date: payload?.date || new Date().toISOString(),
@@ -104,7 +105,7 @@ const TransactionService = (() => {
     const createdTransaction = await TransactionRepository.create({
       accountId: fromAccountId,
       toAccountId,
-      type: 'transferencia',
+      type: TRANSACTION_TYPES.TRANSFER,
       amount,
       description: payload?.description || 'Transferencia',
       date: payload?.date || new Date().toISOString(),

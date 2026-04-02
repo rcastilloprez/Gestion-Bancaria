@@ -11,7 +11,14 @@ const TransactionsPage = {
         <div class="page__header">
           <h1>Mis transacciones</h1>
         </div>
-        <div id="accounts-table"></div>
+        <h2>Depositos</h2>
+        <div id="accounts-deposit"></div>
+        <br/>
+        <h2>Retiros</h2>
+        <div id="accounts-withdrawal"></div>
+        <br/>
+        <h2>Transferencias</h2>
+        <div id="accounts-transfer"></div>
       </section>
     `;
 
@@ -20,13 +27,41 @@ const TransactionsPage = {
 
 
   _loadTransactions: async(container) => {
-    const tableContainer = container.querySelector("#accounts-table");
-    tableContainer.innerHTML = '<p class="loading">...cargando</p>';
+    const tableDeposit = container.querySelector("#accounts-deposit");
+    const tableWithdrawal = container.querySelector("#accounts-withdrawal");
+    const tableTransfer = container.querySelector("#accounts-transfer");
+    tableDeposit.innerHTML = '<p class="loading">...cargando</p>';
+    tableWithdrawal.innerHTML = '<p class="loading">...cargando</p>';
+    tableTransfer.innerHTML = '<p class="loading">...cargando</p>';
 
     try {
       const transactions = await TransactionService.getAll();
 
-      Table.render(tableContainer, {
+      Table.render(tableDeposit, {
+        columns: [
+          {key: 'accountId', label: 'Cuenta de origen'},
+          {key: 'amount', label: 'Monto'},
+          {key: 'description', label: 'Descripcion'},
+          {key: 'date', label: 'Fecha', render: (v) => formatDate(v)},
+
+        ],
+        data: transactions.filter((data) => data.type=="deposito"),
+        emptyMessage: 'No tienes ningun deposito realizado por el momento',
+      });
+
+      Table.render(tableWithdrawal, {
+        columns: [
+          {key: 'accountId', label: 'Cuenta de origen'},
+          {key: 'amount', label: 'Monto'},
+          {key: 'description', label: 'Descripcion'},
+          {key: 'date', label: 'Fecha', render: (v) => formatDate(v)},
+
+        ],
+        data: transactions.filter((data) => data.type=="retiro"),
+        emptyMessage: 'No tienes ningun retiro realizado por el momento',
+      });
+
+      Table.render(tableTransfer, {
         columns: [
           {key: 'accountId', label: 'Cuenta de origen'},
           {
@@ -37,15 +72,14 @@ const TransactionsPage = {
               return item.type === 'transferencia' ? (value ?? '—') : '—';
             }
           },
-          {key: 'type', label: 'Tipo de transaccion'},
           {key: 'amount', label: 'Monto'},
           {key: 'description', label: 'Descripcion'},
           {key: 'date', label: 'Fecha', render: (v) => formatDate(v)},
 
         ],
-        data: transactions,
-        emptyMessage: 'No tienes ninguna tranferencia por el momento',
-      })
+        data: transactions.filter((data) => data.type=="transferencia"),
+        emptyMessage: 'No tienes ninguna transferencia realizada por el momento',
+      });
 
     } catch (error) {
       tableContainer.innerHTML = `<p class="error">Error al cargar cuentas: ${error.message}</p>`

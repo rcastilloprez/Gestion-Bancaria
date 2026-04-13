@@ -4,8 +4,8 @@ const TransactionRepository = (() => {
   const getAll = () => ApiClient.get('/transactions');
   const getById = (id) => ApiClient.get(`/transactions/${id}`);
   const create = (data) => ApiClient.post('/transactions', data);
-
-  return { getAll, getById, create };
+  const deleteById = (id) => ApiClient.delete(`/transactions/${id}`);
+  return { getAll, getById, create, deleteById };
 })();
 
 export default TransactionRepository;

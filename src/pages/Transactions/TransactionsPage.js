@@ -28,14 +28,26 @@ const TransactionsPage = {
     `;
 
     await TransactionsPage._loadTransactions(container);
+
+    container.querySelector('#accounts-deposit').addEventListener('click', () => {
+      const id = e.target.dataset.id;
+      if(!id) return;
+      if(e.target.matches('.btn--delete')) TransactionsPage._deleteTransaction(id, container);
+    });
+
   },
+
+
 
   _getBaseColumns() {
     return [
       { key: 'accountId', label: 'Cuenta de origen' },
       { key: 'amount', label: 'Monto' },
       { key: 'description', label: 'Descripción' },
-      { key: 'date', label: 'Fecha', render: (v) => formatDate(v) }
+      { key: 'date', label: 'Fecha', render: (v) => formatDate(v) },
+      { key: 'actions', label: 'Acciones', render: (item) => `
+        <button class="btn btn--danger btn--delete" data-id="${item.id}">Eliminar</button>
+      `}
     ];
   },
 
@@ -102,6 +114,17 @@ const TransactionsPage = {
       console.error('Error al cargar transacciones:', error);
       TransactionsPage._showErrorState(containers, error.message);
     }
+  },
+
+  _deleteTransaction: async (id, container) => {
+    if(!confirm('Eliminar esta transaccion? Esta transaccion no se puede deshacer.')) return;
+    try {
+      await TransactionService.deleteById(id);
+      await TransactionService._loadTransactions(container);
+    } catch (error) {
+      alert(`No se pudo eliminar la cuenta: ${error.message}`);
+    }
+  
   }
 };
 

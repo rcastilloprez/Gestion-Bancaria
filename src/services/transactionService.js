@@ -10,6 +10,9 @@ const TransactionService = (() => {
   
   const getById      = (id)       => TransactionRepository.getById(id);
   
+
+  const deleteById   = (id)       => TransactionRepository.deleteById(id);
+
   const deposit = async (accountId, payload) => {
     const account = await AccountRepository.getById(accountId);
     const amount = Number(payload?.amount ?? payload);
@@ -122,7 +125,7 @@ const TransactionService = (() => {
     };
   };
 
-  return { getAll, getById, deposit, withdraw, transfer };
+  return { getAll, getById, deleteById, deposit, withdraw, transfer };
 })();
 
 export default TransactionService;

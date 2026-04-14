@@ -29,7 +29,17 @@ const TransactionsPage = {
 
     await TransactionsPage._loadTransactions(container);
 
-    container.querySelector('#accounts-deposit').addEventListener('click', () => {
+    container.querySelector('#accounts-deposit').addEventListener('click', (e) => {
+      const id = e.target.dataset.id;
+      if(!id) return;
+      if(e.target.matches('.btn--delete')) TransactionsPage._deleteTransaction(id, container);
+    });
+    container.querySelector('#accounts-withdrawal').addEventListener('click', (e) => {
+      const id = e.target.dataset.id;
+      if(!id) return;
+      if(e.target.matches('.btn--delete')) TransactionsPage._deleteTransaction(id, container);
+    });
+    container.querySelector('#accounts-transfer').addEventListener('click', (e) => {
       const id = e.target.dataset.id;
       if(!id) return;
       if(e.target.matches('.btn--delete')) TransactionsPage._deleteTransaction(id, container);
@@ -61,7 +71,10 @@ const TransactionsPage = {
       },
       { key: 'amount', label: 'Monto' },
       { key: 'description', label: 'Descripción' },
-      { key: 'date', label: 'Fecha', render: (v) => formatDate(v) }
+      { key: 'date', label: 'Fecha', render: (v) => formatDate(v) },
+      { key: 'actions', label: 'Acciones', render: (item) => `
+        <button class="btn btn--danger btn--delete" data-id="${item.id}">Eliminar</button>
+      `}
     ];
   },
 

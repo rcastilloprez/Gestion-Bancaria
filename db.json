@@ -21,28 +21,12 @@
   ],
   "transactions": [
     {
-      "id": 1,
-      "accountId": 1,
-      "type": "deposito",
-      "amount": 5000,
-      "description": "Depósito nómina",
-      "date": "2026-03-01T10:00:00Z"
-    },
-    {
       "id": 2,
       "accountId": 1,
       "type": "retiro",
       "amount": 800,
       "description": "Necesidad de plata fisica",
       "date": "2026-03-02T14:30:00Z"
-    },
-    {
-      "id": 3,
-      "accountId": 2,
-      "type": "deposito",
-      "amount": 2000,
-      "description": "Ahorro mensual",
-      "date": "2026-03-01T09:00:00Z"
     },
     {
       "id": 4,

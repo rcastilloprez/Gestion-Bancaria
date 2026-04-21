@@ -133,7 +133,7 @@ const TransactionsPage = {
     if(!confirm('Eliminar esta transaccion? Esta transaccion no se puede deshacer.')) return;
     try {
       await TransactionService.deleteById(id);
-      await TransactionService._loadTransactions(container);
+      await TransactionsPage._loadTransactions(container);
     } catch (error) {
       alert(`No se pudo eliminar la cuenta: ${error.message}`);
     }

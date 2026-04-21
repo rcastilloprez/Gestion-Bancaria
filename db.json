@@ -21,21 +21,87 @@
   ],
   "transactions": [
     {
+      "id": 1,
+      "accountId": 1,
+      "type": "deposito",
+      "amount": 2500,
+      "description": "Pago quincenal",
+      "date": "2026-03-01T09:00:00.000Z"
+    },
+    {
       "id": 2,
+      "accountId": 2,
+      "type": "deposito",
+      "amount": 5000,
+      "description": "Ahorro mensual",
+      "date": "2026-03-03T12:15:00.000Z"
+    },
+    {
+      "id": 3,
       "accountId": 1,
       "type": "retiro",
-      "amount": 800,
-      "description": "Necesidad de plata fisica",
-      "date": "2026-03-02T14:30:00Z"
+      "amount": 320,
+      "description": "Pago de servicios",
+      "date": "2026-03-05T16:40:00.000Z"
     },
     {
       "id": 4,
       "accountId": 2,
-      "toAccountId": 1,
+      "type": "retiro",
+      "amount": 1200,
+      "description": "Compra supermercado",
+      "date": "2026-03-07T19:10:00.000Z"
+    },
+    {
+      "id": 5,
+      "accountId": 1,
+      "toAccountId": 2,
       "type": "transferencia",
-      "amount": 2000,
-      "description": "Pago servicios",
-      "date": "2026-03-01T09:00:00Z"
+      "amount": 1500,
+      "description": "Transferencia a fondo de ahorro",
+      "date": "2026-03-10T08:30:00.000Z"
+    },
+    {
+      "id": 6,
+      "accountId": 2,
+      "toAccountId": 3,
+      "type": "transferencia",
+      "amount": 7000,
+      "description": "Inversion inicial",
+      "date": "2026-03-12T11:05:00.000Z"
+    },
+    {
+      "id": 7,
+      "accountId": 3,
+      "type": "deposito",
+      "amount": 18000,
+      "description": "Rendimientos trimestrales",
+      "date": "2026-03-15T10:20:00.000Z"
+    },
+    {
+      "id": 8,
+      "accountId": 3,
+      "type": "retiro",
+      "amount": 2500,
+      "description": "Retiro parcial inversion",
+      "date": "2026-03-18T14:55:00.000Z"
+    },
+    {
+      "id": 9,
+      "accountId": 1,
+      "toAccountId": 3,
+      "type": "transferencia",
+      "amount": 2200,
+      "description": "Aporte a inversion",
+      "date": "2026-03-21T09:45:00.000Z"
+    },
+    {
+      "id": 10,
+      "accountId": 2,
+      "type": "deposito",
+      "amount": 3000,
+      "description": "Ingreso extra",
+      "date": "2026-03-25T18:00:00.000Z"
     }
   ]
 }

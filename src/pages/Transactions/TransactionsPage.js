@@ -146,7 +146,7 @@ const TransactionsPage = {
 
     const accounts = await AccountService.getAll();
     console.log(accounts);
-    const optionsAccount = accounts.map((t) => `<option value="${t}">${t.alias}</option>`).join('');
+    const optionsAccount = accounts.map((t) => `<option value="${t.id}">${t.alias}</option>`).join('');
 
 
     Modal.open({

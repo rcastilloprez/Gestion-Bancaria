@@ -4,6 +4,8 @@ import Table from "../../components/Table/Table.js";
 import TransactionService from "../../services/transactionService.js";
 import { formatDate } from "../../utils/formatter.js";
 import { TRANSACTION_TYPES } from "../../../config/constants.js";
+import AccountService from "../../services/accountService.js";
+import Modal from "../../components/Modal/Modal.js";
 
 const TransactionsPage = {
   render: async (container) => {
@@ -11,7 +13,9 @@ const TransactionsPage = {
       <section class="page">
         <div class="page__header">
           <h1>Mis transacciones</h1>
+          <button id="btn-new-transaction" class="btn btn--primary">+ Nueva Transaccion</button>
         </div>
+
         <div class="transactions-section">
           <h2>Depósitos</h2>
           <div id="accounts-deposit"></div>
@@ -28,6 +32,11 @@ const TransactionsPage = {
     `;
 
     await TransactionsPage._loadTransactions(container);
+
+    container.querySelector('#btn-new-transaction').addEventListener('click', () => {
+      TransactionsPage._openCreateModal(container);
+    })
+
 
     container.querySelector('#accounts-deposit').addEventListener('click', (e) => {
       const id = e.target.dataset.id;
@@ -128,6 +137,51 @@ const TransactionsPage = {
       TransactionsPage._showErrorState(containers, error.message);
     }
   },
+
+  _openCreateModal: async(container) => {
+
+    const typeOptions = Object.entries(TRANSACTION_TYPES)
+      .map(([_, label]) => `<option value="${label}">${label}</option>`)
+      .join('');
+
+    const accounts = await AccountService.getAll();
+    console.log(accounts);
+    const optionsAccount = accounts.map((t) => `<option value="${t}">${t.alias}</option>`).join('');
+
+
+    Modal.open({
+      title: 'Nueva transaccion',
+      confirmText: 'Realizar Transaccion',
+      content: `
+        <form id="form-new-transaction" novalidate>
+          <div class="field">
+            <label>Elegir Cuenta:</label>
+            <select name="account">
+              <option value="">-- Selecciona la cuenta --</option>
+              ${optionsAccount}
+            </select>
+          </div>
+          <div class="field">
+            <label>Accion a efectuar:</label>
+            <select name="type">
+              <option value="">-- Selecciona la accion --</option>
+              ${typeOptions}
+            </select>
+          </div>
+          <div class="field">
+            <label>Valor:</label>
+            <input name="valueTransaction" type="number" value="0" min="0" />
+          </div>
+        </form>
+      
+      
+      `,
+
+    });
+
+
+  },
+
 
   _deleteTransaction: async (id, container) => {
     if(!confirm('Eliminar esta transaccion? Esta transaccion no se puede deshacer.')) return;

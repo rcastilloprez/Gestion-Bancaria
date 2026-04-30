@@ -6,7 +6,7 @@ Flujo para completar el módulo de Transacciones y conectar su efecto en Cuentas
 
 ## Tareas
 
-- [ ] **1. `config/constants.js`** — Declara `TRANSACTION_TYPES` (por ejemplo: `deposito`, `retiro`, `transferencia`) para reutilizar los tipos en formularios, validaciones y tablas sin hardcodear strings.
+- [ x ] **1. `config/constants.js`** — Declara `TRANSACTION_TYPES` (por ejemplo: `deposito`, `retiro`, `transferencia`) para reutilizar los tipos en formularios, validaciones y tablas sin hardcodear strings.
 
 - [ ] **2. `src/services/transactionService.js`** — Implementa `getAll`, `getByAccount`, `deposit`, `withdraw` y `transfer` usando `ApiClient`. Cada operación debe crear registros en `/transactions`, actualizar el/los saldo(s) en `/accounts` y emitir eventos (`transaction:created` y `account:updated`) para mantener la UI sincronizada.
 

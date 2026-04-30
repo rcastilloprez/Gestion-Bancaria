@@ -7,16 +7,10 @@
       "balance": 15400.5
     },
     {
-      "id": 2,
       "alias": "Fondo de Ahorro",
       "type": "Ahorro",
-      "balance": 82000
-    },
-    {
-      "alias": "Inversión a plazo",
-      "type": "Inversión",
-      "balance": 250000.75,
-      "id": 3
+      "balance": 120000,
+      "id": 2
     }
   ],
   "transactions": [
@@ -69,22 +63,6 @@
       "amount": 7000,
       "description": "Inversion inicial",
       "date": "2026-03-12T11:05:00.000Z"
-    },
-    {
-      "id": 7,
-      "accountId": 3,
-      "type": "deposito",
-      "amount": 18000,
-      "description": "Rendimientos trimestrales",
-      "date": "2026-03-15T10:20:00.000Z"
-    },
-    {
-      "id": 8,
-      "accountId": 3,
-      "type": "retiro",
-      "amount": 2500,
-      "description": "Retiro parcial inversion",
-      "date": "2026-03-18T14:55:00.000Z"
     },
     {
       "id": 9,

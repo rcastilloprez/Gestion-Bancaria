@@ -8,7 +8,11 @@ export const ROUTES = {
   TRANSACTIONS: '/transactions',
 };
 
-export const ACCOUNT_TYPES = ['Ahorro', 'Corriente', 'Inversión'];
+export const ACCOUNT_TYPES = {
+  AHORRO: 'Ahorro',
+  CORRIENTE: 'Corriente',
+  INVERSION: 'Inversión'
+};
 
 export const TRANSACTION_TYPES = {
   DEPOSIT: 'deposito',

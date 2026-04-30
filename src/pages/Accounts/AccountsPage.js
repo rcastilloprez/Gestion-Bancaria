@@ -58,7 +58,7 @@ const AccountsPage = {
   },
 
   _openCreateModal: (container) => {
-    const typeOptions = ACCOUNT_TYPES
+    const typeOptions = Object.values(ACCOUNT_TYPES)
       .map((t) => `<option value="${t}">${t}</option>`)
       .join('');
 
@@ -112,7 +112,7 @@ const AccountsPage = {
 
   _openEditModal: async (id, container) => {
     const account = await AccountService.getById(id);
-    const typeOptions = ACCOUNT_TYPES
+    const typeOptions = Object.values(ACCOUNT_TYPES)
       .map((t) => `<option value="${t}" ${t === account.type ? 'selected' : ''}>${t}</option>`)
       .join('');
 
